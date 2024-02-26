@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h1 class="text-light">Detail Contact</h1>
+            <% if (!dataDetail) { %>
+                <div class="alert alert-danger text-center mt-5" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> Sorry, contact you are looking for is not found.
+                </div>
+                <a href="/contact" class="btn btn-outline-info border-2 fw-semibold"><i class="bi bi-arrow-left-circle"></i> Back</a>
+            <% } else { %>
+                <div class="card text-center text-bg-light mt-5" style="max-width: 30rem;">
+                    <div class="card-header">Detail</div>
+                    <div class="card-body">
+                        <h4 class="card-title"><%= dataDetail.name %></h4>
+                        <p class="card-text mb-0"><%= dataDetail.phone %></p>
+                        <p class="card-text mb-0"><%= dataDetail.work %></p>
+                        <p class="card-text"><%= dataDetail.email %></p>
+                        <a href="/contact" class="btn btn-outline-danger border-3 fw-semibold"><i class="bi bi-arrow-left-circle"></i> Back</a>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+

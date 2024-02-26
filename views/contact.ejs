@@ -1,0 +1,49 @@
+<div class="container text-light">
+    <div class="row">
+        <div class="col-8">
+            <h1 class="mb-5">List My Contacts</h1>
+
+            <% if (message.length !== 0) { %>
+                <div class="alert alert-success text-center mt-5" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> <%= message %>
+                </div>
+            <% } %>
+
+            <table class="table  table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="table-dark">
+                    <% if (data.length === 0) { %>
+                        <tr>
+                            <th colspan="4">
+                                <div class="alert alert-warning text-center mt-4" role="alert">
+                                    <i class="bi bi-exclamation-triangle-fill"></i> Sorry, your contact list is empty. Add new contact data.
+                                </div>
+                            </th>
+                        </tr>
+                    <% } else { %>
+                        <% data.forEach((data, i) => { %>
+                            <tr>
+                                <th scope="row"><%= ++i %></th>
+                                <td><%= data.name %></td>
+                                <td><%= data.phone %></td>
+                                <td>
+                                    <a href="/contact/<%= data.name %>" class="btn btn-outline-info badge me-2"><i class="bi bi-info-circle"></i> Detail</a>
+                                    <a href="/contact/update/<%= data.name %>" class="btn btn-outline-warning badge me-2"><i class="bi bi-pencil-square"></i></a>
+                                    <!-- <a href="/contact/delete/<%#= contact.name %>" class="btn btn-outline-danger badge" onclick="return confirm('Yakin Mau Hapus Contact <%#= contact.name %> ?')"><i class="bi bi-trash"></i></a> -->
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
+                </tbody>
+            </table>
+            <a href="/contact/add" class="btn btn-outline-info border-2 mt-3"><i class="bi bi-plus-circle-fill"></i> Add New Contact</a>
+        </div>
+    </div>
+</div>
