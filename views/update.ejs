@@ -31,12 +31,9 @@
                     <input type="email" placeholder="Insert Your Email" class="add-form-input" id="email" name="email" value="<%= contact.email %>">
                 </div>
                 <button type="submit" class="btn btn-outline-info border-2 mt-4 me-3 d-inline"><i class="bi bi-plus-circle-fill"></i> Submit</button>
+                <a href="/contact" class="btn btn-outline-warning border-2 fw-semibold mt-4"><i class="bi bi-arrow-left-circle"></i> Back</a>
             </form>
-            <form action="/contact?_method=DELETE" method="post" class="d-inline">
-                <input type="hidden" name="_id" value="<%= contact._id %>">
-                <button type="submit" class="btn btn-outline-danger border-2 mt-4 me-3" onclick="return confirm('Yakin Mau Hapus Contact <%= contact.name %> ?')"><i class="bi bi-trash"></i></button>
-            </form>
-            <a href="/contact" class="btn btn-outline-warning border-2 fw-semibold mt-4"><i class="bi bi-arrow-left-circle"></i> Back</a>
+
         </div>
     </div>
 </div>

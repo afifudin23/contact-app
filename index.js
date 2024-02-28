@@ -140,8 +140,8 @@ app.put(
     )
 
 // Delete Contact 
-app.delete("/contact", async (req, res) => {
-    const contact = await Hk.findOne({ _id: req.body._id});
+app.delete("/contact/:id", async (req, res) => {
+    const contact = await Hk.findOne({ _id: req.params.id});
     if (!contact) {
         res.status(404)
         .send("Contact Not Found");
@@ -168,4 +168,4 @@ app.use("/", (_, res) => {
     res.send("Page Not Found\n 404");
 });
 
-app.listen(port, () => console.log(`ContactApp listen to https://127.0.0.1:${port}`));
+app.listen(port, () => console.log(`ContactApp listen to http://127.0.0.1:${port}`));

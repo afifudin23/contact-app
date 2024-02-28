@@ -13,7 +13,9 @@
                     <div class="card-body">
                         <h4 class="card-title"><%= dataDetail.name %></h4>
                         <p class="card-text mb-0"><%= dataDetail.phone %></p>
-                        <p class="card-text mb-0"><%= dataDetail.work %></p>
+                        <p class="card-text mb-0"> <% if (dataDetail.dapartement) { %>
+                            <%= dataDetail.dapartement %> Dapartement
+                        <% } %></p>
                         <p class="card-text"><%= dataDetail.email %></p>
                         <a href="/contact" class="btn btn-outline-danger border-3 fw-semibold"><i class="bi bi-arrow-left-circle"></i> Back</a>
                     </div>
