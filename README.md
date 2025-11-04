@@ -8,7 +8,6 @@ This app allows users to add, edit, delete, and view contact information easily 
 ## 🚀 Features
 
 - 🧩 Add, edit, and delete contacts  
-- 🔍 Search and filter contacts by name or phone  
 - 💾 Data stored in MongoDB  
 - 🖥️ Server-side rendering using EJS  
 - ⚙️ Express-based RESTful structure  
