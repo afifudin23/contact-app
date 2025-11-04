@@ -26,7 +26,7 @@ This app allows users to add, edit, delete, and view contact information easily 
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/afifudin23/contact-app.git
+git clone git@github.com:afifudin23/contact-app.git
 cd contact-app
 ```
 
