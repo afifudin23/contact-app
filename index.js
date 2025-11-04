@@ -8,12 +8,11 @@ import methodOverride from "method-override";
 import { Hk } from "./model/hk.js";
 import { check, validationResult } from "express-validator";
 
-
 const port = 3000;
 const app = express();
 
 // Connect MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/rph');
+mongoose.connect("mongodb://127.0.0.1:27017/rph");
 
 // Middleware
 app.set("view engine", "ejs");
@@ -24,19 +23,21 @@ app.use(methodOverride("_method"));
 
 // Configuration flash
 app.use(cookieParser("secret"));
-app.use(session({
-    cookie: { maxAge: 6000},
-    secret: "secret",
-    resave: true,
-    saveUninitialized: true
-}));
+app.use(
+    session({
+        cookie: { maxAge: 6000 },
+        secret: "secret",
+        resave: true,
+        saveUninitialized: true,
+    })
+);
 app.use(flash());
 
 // Root
 app.get("/", (_, res) => {
     res.render("index", {
         title: "Home",
-        layout: "layouts/main"
+        layout: "layouts/main",
     });
 });
 
@@ -44,7 +45,7 @@ app.get("/", (_, res) => {
 app.get("/about", (_, res) => {
     res.render("about", {
         title: "About",
-        layout: "layouts/main"
+        layout: "layouts/main",
     });
 });
 
@@ -55,7 +56,7 @@ app.get("/contact", async (req, res) => {
         title: "Contact",
         layout: "layouts/main",
         data,
-        message: req.flash("message")
+        message: req.flash("message"),
     });
 });
 
@@ -63,10 +64,11 @@ app.get("/contact", async (req, res) => {
 app.get("/contact/add", (_, res) => {
     res.render("add", {
         title: "Add Contact",
-        layout: "layouts/main"
+        layout: "layouts/main",
     });
 });
-app.post("/contact", 
+app.post(
+    "/contact",
     check("name").custom(async (name) => {
         const duplicate = await Hk.findOne({ name: name });
         if (duplicate) {
@@ -75,19 +77,19 @@ app.post("/contact",
         return true;
     }),
     check("phone", "Number Phone is Not Valid").isMobilePhone("id-ID"),
-    check("email", "Email is Not Valid").isEmail().optional({checkFalsy: true}),
+    check("email", "Email is Not Valid").isEmail().optional({ checkFalsy: true }),
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             res.render("add", {
                 title: "Add Contact",
                 layout: "layouts/main",
-                errors: errors.array()
+                errors: errors.array(),
             });
         } else {
             await Hk.insertMany(req.body);
-            req.flash("message", "New Contact Added Successfully")
-            res.redirect("/contact")
+            req.flash("message", "New Contact Added Successfully");
+            res.redirect("/contact");
         }
     }
 );
@@ -98,12 +100,12 @@ app.get("/contact/update/:name", async (req, res) => {
     res.render("update", {
         title: "Update Contact",
         layout: "layouts/main",
-        contact
-    })
-})
+        contact,
+    });
+});
 app.put(
     "/contact",
-    check("name").custom(async (name, {req}) => {
+    check("name").custom(async (name, { req }) => {
         const duplicate = await Hk.findOne({ name });
         if (req.body.oldName !== name && duplicate) {
             throw new Error("Name is Registered");
@@ -111,7 +113,7 @@ app.put(
         return true;
     }),
     check("phone", "Number Phone is Not Valid").isMobilePhone("id-ID"),
-    check("email", "Email is Not Valid").isEmail().optional({checkFalsy: true}),
+    check("email", "Email is Not Valid").isEmail().optional({ checkFalsy: true }),
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -119,32 +121,33 @@ app.put(
                 title: "Add Contact",
                 layout: "layouts/main",
                 errors: errors.array(),
-                contact: req.body
+                contact: req.body,
             });
         } else {
             const contact = await Hk.findOne({ _id: req.body._id });
             // res.send(contact)
             await Hk.updateOne(
                 { _id: contact._id },
-                { $set: {
-                    name: req.body.name,
-                    phone: req.body.phone,
-                    dapartement: req.body.dapartement,
-                    email: req.body.email
-                }}
+                {
+                    $set: {
+                        name: req.body.name,
+                        phone: req.body.phone,
+                        dapartement: req.body.dapartement,
+                        email: req.body.email,
+                    },
+                }
             );
             req.flash("message", `Contact ${req.body.name} Updated Successfully`);
             res.redirect("/contact");
         }
     }
-    )
+);
 
-// Delete Contact 
+// Delete Contact
 app.delete("/contact/:id", async (req, res) => {
-    const contact = await Hk.findOne({ _id: req.params.id});
+    const contact = await Hk.findOne({ _id: req.params.id });
     if (!contact) {
-        res.status(404)
-        .send("Contact Not Found");
+        res.status(404).send("Contact Not Found");
     } else {
         await Hk.deleteOne({ _id: contact._id });
         req.flash("message", `Contact ${contact.name} Deleted Successfully`);
@@ -158,7 +161,7 @@ app.get("/contact/:name", async (req, res) => {
     res.render("detail", {
         title: "Detail Contact",
         layout: "layouts/main",
-        dataDetail
+        dataDetail,
     });
 });
 
